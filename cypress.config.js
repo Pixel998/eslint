@@ -9,32 +9,41 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 module.exports = defineConfig({
     e2e: {
         setupNodeEvents(on) {
-            on(
-                "file:preprocessor",
-                webpackPreprocessor({
-                    webpackOptions: {
-                        mode: "none",
-                        resolve: {
-                            alias: {
-                                "../../../lib/linter$": "../../../build/eslint"
-                            }
+            on("before:browser:launch", (browser = {}, launchOptions) => {
+                if (browser.family === "firefox") {
+                    launchOptions.args.push("-headless");
+                }
+
+                return launchOptions;
+            }),
+                on(
+                    "file:preprocessor",
+                    webpackPreprocessor({
+                        webpackOptions: {
+                            mode: "none",
+                            resolve: {
+                                alias: {
+                                    "../../../lib/linter$":
+                                        "../../../build/eslint",
+                                },
+                            },
+                            plugins: [
+                                new webpack.NormalModuleReplacementPlugin(
+                                    /^node:/u,
+                                    (resource) => {
+                                        resource.request =
+                                            resource.request.replace(
+                                                /^node:/u,
+                                                ""
+                                            );
+                                    }
+                                ),
+                                new NodePolyfillPlugin(),
+                            ],
+                            stats: "errors-only",
                         },
-                        plugins: [
-                            new webpack.NormalModuleReplacementPlugin(
-                                /^node:/u,
-                                resource => {
-                                    resource.request = resource.request.replace(
-                                        /^node:/u,
-                                        ""
-                                    );
-                                }
-                            ),
-                            new NodePolyfillPlugin()
-                        ],
-                        stats: "errors-only"
-                    }
-                })
-            );
+                    })
+                );
         },
         specPattern: path.join(
             __dirname,
@@ -45,6 +54,6 @@ module.exports = defineConfig({
         ),
         supportFile: false,
         reporter: "progress",
-        screenshotOnRunFailure: false
-    }
+        screenshotOnRunFailure: false,
+    },
 });

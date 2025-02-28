@@ -68,9 +68,6 @@
     "test:emfile": "node tools/check-emfile-handling.js",
     "test:types": "tsc -p tests/lib/types/tsconfig.json"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "lint-staged": {
     "*.js": "trunk check --fix --filter=eslint",
     "*.md": "trunk check --fix --filter=markdownlint",
