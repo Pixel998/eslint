@@ -55,5 +55,7 @@ module.exports = defineConfig({
         supportFile: false,
         reporter: "progress",
         screenshotOnRunFailure: false,
+        video: false,
+        numTestsKeptInMemory: 50
     },
 });
