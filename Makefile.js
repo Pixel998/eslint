@@ -616,7 +616,11 @@ target.mocha = () => {
 target.cypress = () => {
     echo("Running unit tests on browsers");
     target.webpack("production");
+<<<<<<< HEAD
     const lastReturn = exec(`${getBinFile("cypress")} run --browser firefox --no-runner-ui`);
+=======
+    const lastReturn = exec(`${getBinFile("cypress")} run`);
+>>>>>>> 7def7ee07cc816a503ce545fd282a595e95dc17a
 
     if (lastReturn.code !== 0) {
         exit(1);
