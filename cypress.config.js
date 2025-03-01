@@ -16,34 +16,34 @@ module.exports = defineConfig({
 
                 return launchOptions;
             }),
-                on(
-                    "file:preprocessor",
-                    webpackPreprocessor({
-                        webpackOptions: {
-                            mode: "none",
-                            resolve: {
-                                alias: {
-                                    "../../../lib/linter$":
-                                        "../../../build/eslint",
-                                },
-                            },
-                            plugins: [
-                                new webpack.NormalModuleReplacementPlugin(
-                                    /^node:/u,
-                                    (resource) => {
-                                        resource.request =
+            on(
+                "file:preprocessor",
+                webpackPreprocessor({
+                    webpackOptions: {
+                        mode: "none",
+                        resolve: {
+                            alias: {
+                                "../../../lib/linter$":
+                                        "../../../build/eslint"
+                            }
+                        },
+                        plugins: [
+                            new webpack.NormalModuleReplacementPlugin(
+                                /^node:/u,
+                                resource => {
+                                    resource.request =
                                             resource.request.replace(
                                                 /^node:/u,
                                                 ""
                                             );
-                                    }
-                                ),
-                                new NodePolyfillPlugin(),
-                            ],
-                            stats: "errors-only",
-                        },
-                    })
-                );
+                                }
+                            ),
+                            new NodePolyfillPlugin()
+                        ],
+                        stats: "errors-only"
+                    }
+                })
+            );
         },
         specPattern: path.join(
             __dirname,
@@ -55,7 +55,6 @@ module.exports = defineConfig({
         supportFile: false,
         reporter: "progress",
         screenshotOnRunFailure: false,
-        video: false,
-        numTestsKeptInMemory: 50
-    },
+        video: false
+    }
 });
