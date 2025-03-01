@@ -55,11 +55,6 @@ module.exports = defineConfig({
         supportFile: false,
         reporter: "progress",
         screenshotOnRunFailure: false,
-<<<<<<< HEAD
         video: false
     }
-=======
-        video: false,
-    },
->>>>>>> 7def7ee07cc816a503ce545fd282a595e95dc17a
 });
