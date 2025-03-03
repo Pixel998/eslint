@@ -200,6 +200,9 @@
       "optional": true
     }
   },
+  "overrides": {
+    "tsconfig-paths": "4.0.0"
+  },
   "keywords": [
     "ast",
     "lint",
