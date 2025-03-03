@@ -103,6 +103,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20" # Should be the same as the version used on Netlify to build the ESLint Playground
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
       - name: Install Packages
         run: npm install
       - name: Test
